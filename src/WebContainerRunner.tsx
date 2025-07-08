@@ -2,6 +2,8 @@
 
 import React, { useEffect } from 'react';
 import { Terminal } from '@xterm/xterm';
+import { FitAddon } from '@xterm/addon-fit';
+
 
 type Props = {
   files: Record<string, { file: string; contents: string }>;
@@ -13,6 +15,25 @@ type Props = {
 const WebContainerRunner: React.FC<Props> = ({ files, entry = ['npm', 'start'], terminal, terminalRef }) => {
   useEffect(() => {
     if (typeof window === 'undefined') return;
+
+    let fit: FitAddon;
+
+    // Check if FitAddon is already loaded
+    const existingFit = (terminal as any)._core?._addons?.find?.((addon: any) => addon instanceof FitAddon);
+    if (existingFit) {
+      fit = existingFit;
+    } else {
+      fit = new FitAddon();
+      terminal.loadAddon(fit);
+    }
+
+    terminal.open(terminalRef.current);
+    fit.fit();
+
+    const handleWindowResize = () => {
+      fit.fit();
+    };
+    window.addEventListener('resize', handleWindowResize);
 
     const run = async () => {
       const { getWebContainer } = await import('.');
