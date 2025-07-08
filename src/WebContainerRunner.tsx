@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import { Terminal } from '@xterm/xterm';
 import { FitAddon } from '@xterm/addon-fit';
+import { CanvasAddon } from '@xterm/addon-canvas';
 
 
 type Props = {
@@ -26,6 +27,9 @@ const WebContainerRunner: React.FC<Props> = ({ files, entry = ['npm', 'start'], 
       fit = new FitAddon();
       terminal.loadAddon(fit);
     }
+
+    const canvasAddon = new CanvasAddon();
+    terminal.loadAddon(canvasAddon);
 
     terminal.open(terminalRef.current);
     fit.fit();
