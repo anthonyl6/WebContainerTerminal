@@ -1,32 +1,21 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Terminal } from '@xterm/xterm';
 
 type Props = {
   files: Record<string, { file: string; contents: string }>;
   entry?: string[];
+  terminal: Terminal;
+  terminalRef: React.RefObject<HTMLDivElement>;
 };
 
-const WebContainerRunner: React.FC<Props> = ({ files, entry = ['npm', 'start'] }) => {
-  const terminalRef = useRef<HTMLDivElement>(null);
-
+const WebContainerRunner: React.FC<Props> = ({ files, entry = ['npm', 'start'], terminal, terminalRef }) => {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    let fit: any;
-    let terminal: Terminal;
-
     const run = async () => {
       const { getWebContainer } = await import('.');
-      const { FitAddon } = await import('@xterm/addon-fit');
-
-      terminal = new Terminal({ convertEol: true });
-      fit = new FitAddon();
-      terminal.loadAddon(fit);
-      terminal.open(terminalRef.current!);
-      fit.fit();
-
       const webcontainer = await getWebContainer();
 
       const fileSystemTree = Object.fromEntries(
