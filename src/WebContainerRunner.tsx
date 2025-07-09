@@ -36,12 +36,6 @@ const WebContainerRunner: React.FC<Props> = ({ files, entry = ['npm', 'start'], 
     terminal.open(terminalRef.current);
     fit.fit();
 
-    const handleWindowResize = () => {
-      fit.fit();
-      console.log("EEEEEE")
-    };
-    window.addEventListener('resize', handleWindowResize);
-
     const run = async () => {
       const { getWebContainer } = await import('.');
       const webcontainer = await getWebContainer();
@@ -72,6 +66,16 @@ const WebContainerRunner: React.FC<Props> = ({ files, entry = ['npm', 'start'], 
           },
         })
       );
+
+      const handleWindowResize = () => {
+        fit.fit();
+        console.log("Resizing webcontainer...")
+
+        const charWidth = terminal.cols;
+        const charHeight = terminal.rows;
+        webcontainer.spawn('node', ['-e', `global.triggerBlessedResize(${charWidth}, ${charHeight})`]);
+      };
+      window.addEventListener('resize', handleWindowResize);
     };
 
     run();
