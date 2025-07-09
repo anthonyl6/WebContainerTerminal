@@ -30,8 +30,8 @@ const WebContainerRunner: React.FC<Props> = ({ files, entry = ['npm', 'start'], 
       terminal.loadAddon(fit);
     }
 
-    const canvasAddon = new CanvasAddon();
-    terminal.loadAddon(canvasAddon);
+    // const canvasAddon = new CanvasAddon();
+    // terminal.loadAddon(canvasAddon);
 
     terminal.open(terminalRef.current);
     fit.fit();
