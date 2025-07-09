@@ -36,6 +36,7 @@ const WebContainerRunner: React.FC<Props> = ({ files, entry = ['npm', 'start'], 
 
     const handleWindowResize = () => {
       fit.fit();
+      console.log("EEEEEE")
     };
     window.addEventListener('resize', handleWindowResize);
 
