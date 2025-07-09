@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import { Terminal } from '@xterm/xterm';
 import { FitAddon } from '@xterm/addon-fit';
-import { CanvasAddon } from '@xterm/addon-canvas';
+//import { CanvasAddon } from '@xterm/addon-canvas';
 
 
 type Props = {
