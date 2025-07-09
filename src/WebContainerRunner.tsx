@@ -19,6 +19,8 @@ const WebContainerRunner: React.FC<Props> = ({ files, entry = ['npm', 'start'], 
 
     let fit: FitAddon;
 
+    console.log("Loaded...")
+
     // Check if FitAddon is already loaded
     const existingFit = (terminal as any)._core?._addons?.find?.((addon: any) => addon instanceof FitAddon);
     if (existingFit) {
